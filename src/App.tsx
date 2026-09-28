@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import TradingAdmin from './games/TradingAdmin';
+import Matka99Admin from './games/Matka99Admin';
 
 // API Base URL
 
@@ -255,10 +257,11 @@ export default function App() {
     'dashboard' | 'admins' | 'users' | 'userChange' | 'gameLedger' | 'wallets' |
     'walletTransactions' | 'deposits' | 'withdraws' | 'commission' |
     'leaderboard' | 'payouts' | 'banners' | 'referral' | 'packages' | 'paymentMethods' | 'pushNotifications' | 'settings' |
-    'userDetails' | 'userEdit' | 'bids' | 'results' | 'winnings' | 'gameHistory' | 'categories'
+    'userDetails' | 'userEdit' | 'bids' | 'results' | 'winnings' | 'gameHistory' | 'categories' |
+    'matka99' | 'numberTrading' | 'cardTrading' | 'colourTrading'
   >(() => {
     const saved = localStorage.getItem('adminActiveTab');
-    const validTabs = ['dashboard', 'admins', 'users', 'userChange', 'gameLedger', 'wallets', 'walletTransactions', 'deposits', 'withdraws', 'commission', 'leaderboard', 'payouts', 'banners', 'referral', 'packages', 'paymentMethods', 'pushNotifications', 'settings', 'bids', 'results', 'winnings', 'gameHistory', 'categories'];
+    const validTabs = ['dashboard', 'admins', 'users', 'userChange', 'gameLedger', 'wallets', 'walletTransactions', 'deposits', 'withdraws', 'commission', 'leaderboard', 'payouts', 'banners', 'referral', 'packages', 'paymentMethods', 'pushNotifications', 'settings', 'bids', 'results', 'winnings', 'gameHistory', 'categories', 'matka99', 'numberTrading', 'cardTrading', 'colourTrading'];
     return (saved && validTabs.includes(saved)) ? saved as any : 'dashboard';
   });
   const setActiveTab = (tab: any) => { localStorage.setItem('adminActiveTab', tab); setActiveTabRaw(tab); };
@@ -910,7 +913,7 @@ export default function App() {
         fetch(`${API_BASE}/api/admin/notifications`),
         fetch(`${API_BASE}/api/game/banner`),
         fetch(`${API_BASE}/api/app/version`),
-        fetch(`${API_BASE}/api/app/settings`),
+        fetch(`${API_BASE}/api/admin/settings`),
         fetch(`${API_BASE}/api/admin/banners`),
         fetch(`${API_BASE}/api/admin/results-history`),
         fetch(`${API_BASE}/api/game/schedules`),
@@ -2198,6 +2201,10 @@ export default function App() {
               { id: 'banners', label: 'Banner', icon: '🖼️' },
               { id: 'referral', label: 'Refer & Earn', icon: '🎁' },
               { id: 'gameLedger', label: 'Game Ledger', icon: '📘' },
+              { id: 'matka99', label: '99x Matka', icon: '💎' },
+              { id: 'numberTrading', label: 'Number Trading', icon: '🔢' },
+              { id: 'cardTrading', label: 'Card Trading', icon: '🃏' },
+              { id: 'colourTrading', label: 'Colour Trading', icon: '🎨' },
               { id: 'wallets', label: 'Wallet', icon: '👛' },
               { id: 'walletTransactions', label: 'Wallet Transactions', icon: '🧾' },
               { id: 'deposits', label: 'Deposit Request', icon: '💳' },
@@ -7019,6 +7026,12 @@ export default function App() {
                 </div>
               </div>
             )}
+
+            {/* NEW GAMES */}
+            {activeTab === 'matka99' && <Matka99Admin />}
+            {activeTab === 'numberTrading' && <TradingAdmin key="number" game="number" />}
+            {activeTab === 'cardTrading' && <TradingAdmin key="card" game="card" />}
+            {activeTab === 'colourTrading' && <TradingAdmin key="colour" game="colour" />}
 
           </main>
 
